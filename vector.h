@@ -28,8 +28,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "stdlib.h"
-#include "string.h"
+#include <stdlib.h>
+#include <string.h>
 /* for new*() functions or destroy() functions */
 /* this struct allows an object to keep a reference to it's self so that the
  * program does not leak memory, and so that the program is able to manipulate
