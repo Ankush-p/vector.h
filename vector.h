@@ -89,6 +89,13 @@ typedef struct VECTOR_##name##_v { \
  	 */ \
 	int (*resize)(struct VECTOR_##name##_v *vec, size_t n); \
 \
+	/** @brief - resize the vector to exactly enough bytes for 
+	 * 	vec->Occupied elements (so that vec->Occupied = vec->Capacity)
+	 * @param [in] vec - A Pointer To The Vector
+	 * @ return <int> - , -1 indictes malloc() failed.
+	 */ \
+	int (*clamp)(struct VECTOR_##name##_v *vec); \
+\
 	/** @brief - add one element to the end of the vector.
  	 * @param [in] vec - A Pointer To The Vector.
  	 * @param [in] data - The data to push (add) onto the vector.
@@ -181,6 +188,9 @@ static int VECTOR_##name##_v_RESIZE(struct VECTOR_##name##_v *vec, size_t n) \
 		vec->Occupied = n; \
 	return (0); \
 } \
+/* resize vector(->Elements) to hold vec->Ocucpied elements */ \
+static int VECTOR_##name##_v_CLAMP(struct VECTOR_##name##_v *vec) \
+{ return (VECTOR_##name##_v_RESIZE(vec, vec->Occupied)); } \
 /* add one element to the end of the vector */ \
 static int VECTOR_##name##_v_PUSH(struct VECTOR_##name##_v *vec, elemType data)\
 { \
@@ -247,6 +257,7 @@ static struct VECTOR_##name##_v *NEW_VECTOR_##name##_v(size_t size) \
 	vec->size = &VECTOR_##name##_v_SIZE; \
 	vec->capacity = &VECTOR_##name##_v_CAPACITY; \
 	vec->resize = &VECTOR_##name##_v_RESIZE; \
+	vec->clamp = &VECTOR_##name##_v_CLAMP; \
 	vec->push = &VECTOR_##name##_v_PUSH; \
 	vec->pop = &VECTOR_##name##_v_POP; \
 	vec->insert = &VECTOR_##name##_v_INSERT; \
