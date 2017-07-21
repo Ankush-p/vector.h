@@ -194,7 +194,7 @@ static int VECTOR_##name##_v_CLAMP(struct VECTOR_##name##_v *vec) \
 /* add one element to the end of the vector */ \
 static int VECTOR_##name##_v_PUSH(struct VECTOR_##name##_v *vec, elemType data)\
 { \
-	if (vec->Occupied + 1 >= vec->Capacity) \
+	if (vec->Occupied + 1 > vec->Capacity) \
 		VECTOR_##name##_v_RESIZE(vec, 2 * vec->Capacity); \
 	vec->Elements[vec->Occupied] = data; \
 	++vec->Occupied; \
@@ -212,7 +212,7 @@ static int VECTOR_##name##_v_POP(struct VECTOR_##name##_v *vec) \
 static int VECTOR_##name##_v_INSERT(struct VECTOR_##name##_v *vec, size_t index\
 	, elemType data) \
 { \
-	if (vec->Occupied + 1 >= vec->Capacity) \
+	if (vec->Occupied + 1 > vec->Capacity) \
 		VECTOR_##name##_v_RESIZE(vec, 2 * vec->Capacity); \
 	memmove(vec->Elements + index + 1, vec->Elements + index, \
 		sizeof(elemType) * vec->Occupied - index); \
